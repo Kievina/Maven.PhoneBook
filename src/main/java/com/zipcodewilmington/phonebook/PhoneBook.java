@@ -11,7 +11,7 @@ public class PhoneBook {
     private Map<String, List<String>> map;
 
     public PhoneBook(Map<String, List<String>> map) {
-        this.map = new HashMap<>();
+        this.map = new LinkedHashMap<>();
     }
 
     public PhoneBook() {
@@ -38,19 +38,22 @@ public class PhoneBook {
         return map.get(name);
     }
 
-    public String reverseLookup(String phoneNumber)  {
-        //String keyLookup = "";
-        for(Map.Entry<String, List<String>> pair: map.entrySet()) {
-            if(map.get(pair.getKey()).equals(phoneNumber))
-                return pair.getKey();
-
+    public String reverseLookup(String phoneNumber) {
+        String result = "";
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            List<String> listOfPhoneNumbers = map.get(entry.getKey());
+            for (int i = 0; i < listOfPhoneNumbers.size(); i++) {
+                if (listOfPhoneNumbers.get(i).equals(phoneNumber))
+                result = entry.getKey();
+            }
         }
-        return null;
+        return result;
     }
+
 
     public List<String> getAllContactNames() {
         ArrayList<String> keyList = new ArrayList<String>();
-        for(Map.Entry<String, List<String>> pair: map.entrySet()) {
+        for (Map.Entry<String, List<String>> pair : map.entrySet()) {
             keyList.add(pair.getKey());
         }
         //Collections.sort(map);
